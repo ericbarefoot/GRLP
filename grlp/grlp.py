@@ -553,6 +553,23 @@ class LongProfile(object):
             print("k_s = ", self.ks)
             print("R2 = ", out.rvalue**2.)
 
+    def truncate_at_shoreline(self, shore_z):
+        """
+        If a disturbance like rapid base level rise overcomes the sediment
+        discharge of the river, the outlet will backstep. This function
+        re-sizes the domain to reflect a new shoreline elevation.
+        """
+        self.downstream_segment_IDs = []
+        shore_x_index = np.argmin(np.abs(self.z - shore_z))
+        shore_x = self.x[shore_x_index]
+        # truncated_domain = 
+        self.set_x(self.x[0:shore_x_index])
+        self.set_z(self.z[0:shore_x_index])
+        self.set_A(self.A[0:shore_x_index])
+        self.set_Q(self.Q[0:shore_x_index])
+        self.set_B(self.B[0:shore_x_index])
+        self.set_z_bl(shore_z)
+
 class Network(object):
     """
     Gravel-bed river long-profile solution builder and solver
