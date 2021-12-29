@@ -104,18 +104,19 @@ class LongProfile(object):
         dx, nx, and x0
         """
         if x is not None:
-            # This doesn't have enough information to work consistently
-            # Needs ext
             self.x = np.array(x)
             self.dx = np.diff(self.x)
             self.dx_2cell = self.x[2:] - self.x[:-2]
-        elif x_ext is not None:
-            self.x_ext = np.array(x_ext)
-            self.x = x_ext[1:-1]
+            self.x_ext = np.hstack((self.x[0]-self.dx[0], self.x, self.x[-1]+self.dx[-1]))
             self.dx_ext = np.diff(self.x_ext)
             self.dx_ext_2cell = self.x_ext[2:] - self.x_ext[:-2]
-            self.dx_2cell = self.x[2:] - self.x[:-2]
+        elif x_ext is not None:
+            self.x_ext = np.array(x_ext)
+            self.dx_ext = np.diff(self.x_ext)
+            self.dx_ext_2cell = self.x_ext[2:] - self.x_ext[:-2]
+            self.x = x_ext[1:-1]
             self.dx = np.diff(self.x)
+            self.dx_2cell = self.x[2:] - self.x[:-2]
         elif (dx is not None) and (nx is not None) and (x0 is not None):
             self.x = np.arange(x0, x0+dx*nx, dx)
             self.x_ext = np.arange(x0-dx, x0+dx*(nx+1), dx)
