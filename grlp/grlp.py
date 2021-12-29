@@ -82,9 +82,10 @@ class LongProfile(object):
                    * (1+self.epsilon)**(-5/3.) * self.tau_star_c**(-5/3.)
         self.k_Qs = self.k_b * self.k_qs
 
-    def set_hydrologic_constants(self, P_xA=7/4., P_AQ=0.7, P_xQ=None):
+    def set_hydrologic_constants(self, P_xA=7/4., P_AQ=0.7, P_xQ=None, P_xB=0.4):
         self.P_xA = P_xA # inverse Hack exponent
         self.P_AQ = P_AQ # drainage area -- discharge exponent
+        self.P_xB = P_xB # valley widening exponent
         if P_xQ:
             warnings.warn("P_xQ may be inconsistent with P_xA and P_AQ")
             self.P_xQ = P_xQ
