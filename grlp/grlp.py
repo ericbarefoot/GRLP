@@ -570,6 +570,16 @@ class LongProfile(object):
         self.set_B(self.B[0:shore_x_index])
         self.set_z_bl(shore_z)
 
+    def prograde(self):
+        """
+        If the river is entering a standing pool of water, then over time, 
+        sediment should spill into the pool, prograding a delta. If the 
+        river is assumed to be steep enough, then it will have a negligible
+        backwater zone, and we can treat the delta-building purely as a
+        sediment geometry problem.
+        """
+        pass
+
 class Network(object):
     """
     Gravel-bed river long-profile solution builder and solver
@@ -871,3 +881,16 @@ class Network(object):
         for i in range(1,len(self.order_counts)):
             self.length_ratios[i] = (self.order_lengths[i] / 
                                      self.order_lengths[i-1])
+
+    def detect_depressions(self):
+        """
+        Loop through the network, and find out if any sections have a depression 
+        (defined for the moment as having an adverse slope)
+        """
+        pass
+
+    def break_network_at_depressions(self):
+        """
+        If rivers have depressions, classify them, find their edges, split the network, and redefine boundary conditions.
+        """        
+        pass
